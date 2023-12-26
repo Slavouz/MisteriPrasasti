@@ -12,6 +12,7 @@ dependencies:
   firebase_auth: ^4.15.3
   google_sign_in: ^6.2.1
   firebase_ui_oauth_google: ^1.2.15
+  shared_preferences: ^2.2.2
   flutter:
     sdk: flutter
 
