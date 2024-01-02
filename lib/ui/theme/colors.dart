@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, use_full_hex_values_for_flutter_colors
+// karo iki
 
 import 'package:flutter/material.dart';
 
@@ -11,6 +11,13 @@ class AppColor{
 
   static List<Color> letterColors = [
     Colors.white,
+    Colors.blue.shade100,
+    Colors.greenAccent,
+    Colors.green,
+    Colors.yellow,
+    Colors.amber,
+    Colors.orange,
+    Colors.red
   ];
 
 }
