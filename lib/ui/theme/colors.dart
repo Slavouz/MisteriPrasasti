@@ -10,7 +10,7 @@ class AppColor{
   static Color clickedCard = Color(0xFF818181);
 
   static List<Color> letterColors = [
-    
+    Colors.white,
   ];
 
 }
