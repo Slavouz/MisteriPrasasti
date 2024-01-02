@@ -1,7 +1,3 @@
-
-
-// Aku nambah iki gasss
-
 import 'package:flutter/material.dart';
 import 'package:misteri_prasasti/ui/theme/colors.dart';
 
@@ -21,7 +17,7 @@ class _MainScreenState extends State<MainScreen> {
         backgroundColor: AppColor.primaryColor,
         elevation: 0.0,
         centerTitle: true,
-        title: Text("Misteri Prasasti"),
+        title: const Text("Misteri Prasasti"),
         actions: [
           IconButton(
             onPressed: () {}, 
@@ -34,10 +30,10 @@ class _MainScreenState extends State<MainScreen> {
         children: [
           Expanded(
             child: Container(
-            margin: EdgeInsets.symmetric(horizontal: 20.0),
-            padding: EdgeInsets.symmetric(horizontal: 22.0, vertical: 16.0),
+            margin: const EdgeInsets.symmetric(horizontal: 20.0),
+            padding: const EdgeInsets.symmetric(horizontal: 22.0, vertical: 16.0),
             decoration: BoxDecoration(
-              image: DecorationImage(
+              image: const DecorationImage(
                 image: AssetImage
                 ('assets/images/concept.png'),
               fit: BoxFit.cover,
