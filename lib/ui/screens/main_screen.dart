@@ -1,4 +1,6 @@
-// ignore_for_file: prefer_const_constructors
+
+
+// Aku nambah iki gasss
 
 import 'package:flutter/material.dart';
 import 'package:misteri_prasasti/ui/theme/colors.dart';
