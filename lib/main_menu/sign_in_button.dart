@@ -23,7 +23,7 @@ class SignInButton extends StatelessWidget {
               _prefs.setString('email', user.email);
               Get.snackbar('Success', 'Halo, ${user.displayName}');
             } else {
-              Get.snackbar('Success', 'Halo, Player');
+              Get.snackbar('Success', 'Halo, Player!');
             }
           }).catchError((error) {
             Get.snackbar('Failed', 'Login Gagal');
