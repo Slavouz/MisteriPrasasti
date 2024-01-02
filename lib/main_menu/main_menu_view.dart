@@ -2,7 +2,7 @@ import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:misteri_prasasti/game/main_game.dart';
+import 'package:misteri_prasasti/ui/screens/main_screen.dart';
 
 class MainMenuView extends StatelessWidget {
   MainMenuView({super.key});
@@ -31,7 +31,7 @@ class MainMenuView extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: FilledButton(
               onPressed: () {
-                runApp(GameWidget<FlameGame>(game: MainGame()));
+                runApp(MainScreen());
               },
               style: ButtonStyle(
                 backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
@@ -49,7 +49,7 @@ class MainMenuView extends StatelessWidget {
               onPressed: () {
                 _googleSignIn.signIn().then((user) {
                   if (user?.displayName != null) {
-                    runApp(GameWidget<FlameGame>(game: MainGame()));
+                    runApp(MainScreen());
                     Get.snackbar(
                         'Success',
                         'Halo, ${user!.displayName}'
