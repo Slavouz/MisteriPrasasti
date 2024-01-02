@@ -11,6 +11,13 @@ class AppColor{
 
   static List<Color> letterColors = [
     Colors.white,
+    Colors.blue.shade100,
+    Colors.greenAccent,
+    Colors.green,
+    Colors.yellow,
+    Colors.amber,
+    Colors.orange,
+    Colors.red
   ];
 
 }
