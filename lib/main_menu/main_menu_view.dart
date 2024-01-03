@@ -1,15 +1,21 @@
-import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_sign_in/google_sign_in.dart';
-import 'package:misteri_prasasti/ui/screens/main_screen.dart';
+import 'package:misteri_prasasti/main_menu/play_button_widget.dart';
+import 'package:misteri_prasasti/main_menu/sign_in_button.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MainMenuView extends StatelessWidget {
   MainMenuView({super.key});
-  final GoogleSignIn _googleSignIn = GoogleSignIn();
+  final SharedPreferences _prefs = Get.find<SharedPreferences>();
+  final RxBool isLoggedIn = false.obs;
+
+  Future<void> checkLoginStatus() async {
+    isLoggedIn.value = _prefs.containsKey('email');
+  }
 
   @override
   Widget build(BuildContext context) {
+    checkLoginStatus();
     return Scaffold(
         body: Container(
       width: double.infinity,
@@ -27,55 +33,9 @@ class MainMenuView extends StatelessWidget {
         children: [
           const Image(image: AssetImage('assets/images/logo_main_menu.png')),
           Container(
-            margin: const EdgeInsets.only(top: 32),
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: FilledButton(
-              onPressed: () {
-                runApp(MainScreen());
-              },
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.green),
-              ),
-              child: const Text(
-                'PLAY',
-                textAlign: TextAlign.center,
-              ),
-            ),
-          ),
-          Container(
             margin: const EdgeInsets.only(top: 16),
             padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: FilledButton(
-              onPressed: () {
-                _googleSignIn.signIn().then((user) {
-                  if (user?.displayName != null) {
-                    runApp(MainScreen());
-                    Get.snackbar(
-                        'Success',
-                        'Halo, ${user!.displayName}'
-                    );
-                  } else {
-                    Get.snackbar(
-                        'Success',
-                        'Halo, Player'
-                    );
-                  }
-                }).catchError((error) {
-                  Get.snackbar(
-                      'Failed',
-                      'Login Gagal'
-                  );
-                });
-              },
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all<Color>(Colors.white)
-              ),
-              child: const Text(
-                'Continue with Google',
-                textAlign: TextAlign.center,
-                style: TextStyle(color: Colors.black),
-              ),
-            ),
+            child: isLoggedIn.value ? const PlayButton() : SignInButton(),
           )
         ],
       ),
