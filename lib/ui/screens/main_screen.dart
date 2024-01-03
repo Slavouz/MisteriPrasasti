@@ -21,6 +21,7 @@ class _MainScreenState extends State<MainScreen> {
         backgroundColor: AppColor.primaryColor,
         elevation: 0.0,
         centerTitle: true,
+        // kok judul iki gak muncul?
         title: Text("Misteri Prasasti"),
         actions: [
           IconButton(
