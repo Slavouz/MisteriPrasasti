@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:flame/flame.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
 
@@ -6,6 +9,45 @@ import '../main_menu/main_menu_view.dart';
 class PlaySessionScreen extends StatelessWidget {
   PlaySessionScreen({super.key});
   final player = AudioPlayer();
+
+  Widget generateGrid() {
+    final List<String> images = ['assets/images/dirt.png', 'assets/images/stone.png', 'assets/images/stone_cracked.png'];
+    List<Widget> gridItems = [];
+
+    for (int i = 0; i < 6; i++) {
+      List<Widget> rowItems = [];
+      for (int j = 0; j < 6; j++) {
+        final imageIndex = Random().nextInt(images.length);
+        final imagePath = images[imageIndex];
+
+        rowItems.add(StatefulBuilder(
+            builder: (context, setState) => GestureDetector(
+              onTap: () {
+                if (imagePath == 'assets/images/stone.png') {
+                  FlameAudio.play('mc_stone1.wav');
+                } else if (imagePath == 'assets/images/stone_cracked.png') {
+                  FlameAudio.play('mc_stone2.wav');
+                } else {
+                  FlameAudio.play('mc_dirt.wav');
+                }
+                setState(() {
+                  //delete the item
+                });
+              },
+              child: Image.asset(imagePath, scale: 25),
+            )
+        ));
+      }
+      gridItems.add(Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: rowItems,
+      ));
+    }
+    return Column(
+      children: gridItems,
+    );
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -79,36 +121,16 @@ class PlaySessionScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              margin: const EdgeInsets.symmetric(horizontal: 16.0),
+              margin: const EdgeInsets.symmetric(horizontal: 32.0),
               padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 16.0),
               decoration: BoxDecoration(
-                color: Colors.white,
+                image: const DecorationImage(
+                    image: AssetImage('assets/images/game_bg.png'),
+                    fit: BoxFit.cover
+                ),
                 borderRadius: BorderRadius.circular(8.0)
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  IconButton(
-                      icon: Image.asset('assets/images/dirt.png', scale: 25),
-                      onPressed: () {
-                        FlameAudio.play('mc_dirt.wav');
-                      }
-                  ),
-                  IconButton(
-                      icon: Image.asset('assets/images/stone.png', scale: 25),
-                      onPressed: ()  {
-                        FlameAudio.play('mc_stone1.wav');
-                      }
-                  ),
-                  IconButton(
-                    icon: Image.asset('assets/images/stone_cracked.png', scale: 25),
-                    onPressed: () {
-                      FlameAudio.play('mc_exp.wav');
-                    },
-                  )
-                ],
-              ),
+              child: generateGrid()
             )
           ],
         ),
