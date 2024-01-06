@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-
-import '../ui/screens/main_screen.dart';
+import 'package:misteri_prasasti/play_session/play_session_screen.dart';
 
 class PlayButton extends StatelessWidget {
   const PlayButton({super.key});
@@ -9,8 +8,8 @@ class PlayButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return FilledButton(
       onPressed: () {
-        runApp(const MaterialApp(
-          home: MainScreen(),
+        runApp(MaterialApp(
+          home: PlaySessionScreen(),
         ));
       },
       style: ButtonStyle(
