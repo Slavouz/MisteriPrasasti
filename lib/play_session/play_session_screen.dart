@@ -1,14 +1,22 @@
 import 'dart:math';
 
-import 'package:flame/flame.dart';
 import 'package:flame_audio/flame_audio.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:misteri_prasasti/win_game/win_game_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../main_menu/main_menu_view.dart';
 
 class PlaySessionScreen extends StatelessWidget {
   PlaySessionScreen({super.key});
   final player = AudioPlayer();
+  final SharedPreferences _prefs = Get.find<SharedPreferences>();
+  final RxBool isVolumeOn = true.obs;
+
+  Future<void> checkVolumeStatus() async {
+    isVolumeOn.value = _prefs.getBool('volume')!;
+  }
 
   Widget generateGrid() {
     final List<String> images = ['assets/images/dirt.png', 'assets/images/stone.png', 'assets/images/stone_cracked.png'];
@@ -23,12 +31,14 @@ class PlaySessionScreen extends StatelessWidget {
         rowItems.add(StatefulBuilder(
             builder: (context, setState) => GestureDetector(
               onTap: () {
-                if (imagePath == 'assets/images/stone.png') {
+                if (imagePath == 'assets/images/stone.png' && isVolumeOn.isTrue) {
                   FlameAudio.play('mc_stone1.wav');
-                } else if (imagePath == 'assets/images/stone_cracked.png') {
+                } else if (imagePath == 'assets/images/stone_cracked.png' && isVolumeOn.isTrue) {
                   FlameAudio.play('mc_stone2.wav');
                 } else {
-                  FlameAudio.play('mc_dirt.wav');
+                  if (isVolumeOn.isTrue) {
+                    FlameAudio.play('mc_dirt.wav');
+                  }
                 }
                 setState(() {
                   //delete the item
@@ -73,16 +83,32 @@ class PlaySessionScreen extends StatelessWidget {
                                 IconButton(
                                     icon: const Icon(Icons.volume_up),
                                     onPressed: () {
-                                      // Volume Up
+                                      // Volume On
+                                      _prefs.setBool('volume', true);
                                     }
                                 ),
                                 IconButton(
                                     icon: const Icon(Icons.volume_off),
                                     onPressed: () {
                                       // Volume Mute
+                                      _prefs.setBool('volume', false);
                                     }
                                 ),
                               ],
+                            ),
+                            const SizedBox(height: 16.0),
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                                runApp(const MaterialApp(
+                                  home: WinGameScreen(),
+                                ));
+                              },
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.white,
+                                foregroundColor: Colors.blue,
+                              ),
+                              child: const Text('Win Test'),
                             ),
                             const SizedBox(height: 16.0),
                             ElevatedButton(
