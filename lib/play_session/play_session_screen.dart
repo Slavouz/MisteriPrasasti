@@ -22,6 +22,9 @@ class PlaySessionScreen extends StatelessWidget {
     final List<String> images = ['assets/images/dirt.png', 'assets/images/stone.png', 'assets/images/stone_cracked.png'];
     List<Widget> gridItems = [];
 
+    final randomRow = Random().nextInt(6);
+    final randomColumn = Random().nextInt(6);
+
     for (int i = 0; i < 6; i++) {
       List<Widget> rowItems = [];
       for (int j = 0; j < 6; j++) {
@@ -31,6 +34,11 @@ class PlaySessionScreen extends StatelessWidget {
         rowItems.add(StatefulBuilder(
             builder: (context, setState) => GestureDetector(
               onTap: () {
+                if (i == randomRow && j == randomColumn) {
+                  runApp(const MaterialApp(
+                    home: WinGameScreen(),
+                  ));
+                }
                 if (imagePath == 'assets/images/stone.png' && isVolumeOn.isTrue) {
                   FlameAudio.play('mc_stone1.wav');
                 } else if (imagePath == 'assets/images/stone_cracked.png' && isVolumeOn.isTrue) {
@@ -47,6 +55,8 @@ class PlaySessionScreen extends StatelessWidget {
               child: Image.asset(imagePath, scale: 25),
             )
         ));
+
+
       }
       gridItems.add(Row(
         mainAxisAlignment: MainAxisAlignment.center,
